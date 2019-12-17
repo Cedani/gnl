@@ -16,11 +16,14 @@ char *get_next_line(int fd)
 
     for (i = 0; tmp && tmp[i]; i += 1);
     tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
-    i = k = read(fd, tmp, READ_SIZE);
+    k = read(fd, tmp, READ_SIZE);
+    tmp[READ_SIZE] = '\0';
+    i = k;
     if (k == -1 || k == 0)
         return (NULL);
     for (; check_n(tmp, &buffer, fd, &i) == 0 && k == READ_SIZE; k += 0) {
         k = read(fd, tmp, READ_SIZE);
+        tmp[READ_SIZE] = '\0';
         i = k;
     }
     return (buffer);
@@ -30,6 +33,7 @@ char *my_strncat(char *str, char *src, int n)
 {
     char *dest = NULL;
     int k = 0;
+    int i = 0;
     if (str == NULL)
         dest = malloc(sizeof(*dest) * n + 1);
     else {
@@ -37,8 +41,9 @@ char *my_strncat(char *str, char *src, int n)
         dest = malloc(sizeof(*dest) * (k) + 1);
         dest = str;
     }
-    for (int i = 0; i < n; i += 1)
+    for (; i < n; i += 1)
         dest[i + k] = src[i];
+    dest[i + k] = '\0';
     return (dest);
 }
 
@@ -71,5 +76,17 @@ char *get_without_n(char *tmp, int ind)
             k += 1;
         }
     }
+    dest[k] = '\0';
     return (dest);
+}
+
+int main (void) {
+    int fd = open("test", O_RDONLY);
+    char *buffer = get_next_line(fd);
+    while (buffer) {
+        printf("%s\n", buffer);
+        free(buffer);
+        buffer = get_next_line(fd);
+    }
+    return (0);
 }
