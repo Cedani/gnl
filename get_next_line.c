@@ -79,14 +79,3 @@ char *get_without_n(char *tmp, int ind)
     dest[k] = '\0';
     return (dest);
 }
-
-int main (void) {
-    int fd = open("test", O_RDONLY);
-    char *buffer = get_next_line(fd);
-    while (buffer) {
-        printf("%s\n", buffer);
-        free(buffer);
-        buffer = get_next_line(fd);
-    }
-    return (0);
-}
