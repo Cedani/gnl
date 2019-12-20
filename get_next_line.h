@@ -4,10 +4,11 @@
 ** File description:
 ** useful functions
 */
-
+#ifndef READ_SIZE
+#define READ_SIZE  2
+#endif
 #ifndef MY
 #define MY
-#define READ_SIZE  5
 #include <stddef.h>
 #include <sys/types.h>
 #include <sys/stat.h>
