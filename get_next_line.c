@@ -28,10 +28,10 @@ char *buffer_to_give(int *index, char *container)
     int ok = 0;
     char *buffer = malloc(sizeof(*buffer) * 1);
 
-    if (!container || !container[*index])
+    if (!container)
         return NULL;
     for (; container[*index] && nb_n != 2 && ok != 2; *index += 1) {
-        if (container[*index] == '\n' && container[*index] == '\n' && ok != 1) {
+        if (container[*index] == '\n' && ok != 1) {
             buffer[0] = '\n';
             nb_n = 2;
         }
@@ -45,6 +45,16 @@ char *buffer_to_give(int *index, char *container)
     return (buffer);
 }
 
+void reset_static(char **container, int *index, int fd2, int *init) {
+    static int change_fd = 0;
+    if (change_fd != fd2) {
+        free(container[0]);
+        *index = 0;
+        *init = 0;
+    }
+    change_fd = fd2;
+}
+
 char *get_next_line(int fd)
 {
     static int init = 0;
@@ -53,6 +63,7 @@ char *get_next_line(int fd)
     static int index = 0;
     int k = read(fd, tmp, READ_SIZE);
 
+    reset_static(&container, &index, fd, &init);
     if (fd == -1 || (init == 1 && !container[index]))
         return (NULL);
     if (init == 0) {
