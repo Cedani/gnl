@@ -11,7 +11,7 @@ char *my_strcat(char *str1, char *str2, int n)
 {
     int i = 0;
     int j = 0;
-    char *result;
+    char *result = NULL;
 
     for (; str1 && str1[i]; i += 1);
     result = malloc(sizeof(*result) * (i + n) + 1);
@@ -22,35 +22,35 @@ char *my_strcat(char *str1, char *str2, int n)
     return (result);
 }
 
-char *buffer_to_give(int *index, char *container)
+char *buffer_to_give(int *ind, char *cont)
 {
     int nb_n = 0;
     int ok = 0;
     char *buffer = malloc(sizeof(*buffer) * 1);
 
-    if (!container)
+    if (!cont)
         return NULL;
-    for (; container[*index] && nb_n != 2 && ok != 2; *index += 1) {
-        if (container[*index] == '\n' && ok != 1) {
+    for (; cont[*ind] && nb_n != 2 && ok != 2; *ind += 1) {
+        if (cont[*ind] == '\n' && ok != 1) {
             buffer[0] = '\n';
             nb_n = 2;
         }
-        else if (container[*index] == '\n' && ok == 1)
+        else if (cont[*ind] == '\n' && ok == 1)
             ok = 2;
         else {
-            buffer = my_strcat(buffer, &container[*index], 1);
+            buffer = my_strcat(buffer, &cont[*ind], 1);
             ok = 1;
         }
     }
     return (buffer);
 }
 
-void reset_static(char **container, int *index, int fd2, int *init) {
+void reset_static(char **conta, int *ind, int fd2, int *ini) {
     static int change_fd = 0;
     if (change_fd != fd2) {
-        free(container[0]);
-        *index = 0;
-        *init = 0;
+        free(conta[0]);
+        *ind = 0;
+        *ini = 0;
     }
     change_fd = fd2;
 }
@@ -58,20 +58,20 @@ void reset_static(char **container, int *index, int fd2, int *init) {
 char *get_next_line(int fd)
 {
     static int init = 0;
-    char *tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
-    static char *container;
+    char *tmp = NULL;
+    static char *container = NULL;
     static int index = 0;
-    int k = read(fd, tmp, READ_SIZE);
+    int k = -2;
 
     reset_static(&container, &index, fd, &init);
-    if (fd == -1 || (init == 1 && !container[index]))
+    if (fd == -1 || (init == 1 && !container[index]) || READ_SIZE <= 0)
         return (NULL);
+    tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
     if (init == 0) {
-        for (; k != 0; k += 0) {
+        k = read(fd, tmp, READ_SIZE);
+        for (; k != 0; k = read(fd, tmp, READ_SIZE))
             if (k != 0)
                 container = my_strcat(container, tmp, k);
-            k = read(fd, tmp, READ_SIZE);
-        }
         init += 1;
     }
     tmp = buffer_to_give(&index, container);
