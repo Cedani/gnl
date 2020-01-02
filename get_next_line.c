@@ -73,15 +73,3 @@ char *get_next_line(int fd)
     tmp = buffer_to_give(&index, container);
     return (tmp);
 }
-
-int main(void) {
-    int fd = open("test", O_RDONLY);
-    char *buffer = get_next_line(fd);
-
-    while (buffer) {
-        printf("%s\n", buffer);
-        free(buffer);
-        buffer = get_next_line(fd);
-    }
-    return (0);
-}
