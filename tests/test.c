@@ -18,7 +18,7 @@ Test(get_next_line, should_handle_wrong_file) {
 
 Test(get_next_line, should_handle_empty_file) {
     int fd = open("./tests/test_empty", O_RDONLY);
-    char * buffer = get_next_line(fd);
+    char *buffer = get_next_line(fd);
     cr_assert_null(buffer);
     close(fd);
 }
@@ -81,9 +81,9 @@ Test(get_next_line, should_print_n_between_line) {
     close(fd);
 }
 
-Test(my_strcat, should_handle_second_null) {
+Test(my_strcat, should_handle_first_null) {
     char *buffer = NULL;
-    buffer = my_strcat("Hello", buffer, 5);
+    buffer = my_strcat(buffer, "Hello", 5);
 
     cr_assert_str_eq(buffer, "Hello");
 }

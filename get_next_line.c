@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** get_next_line
 ** File description:
-** get as many line as we call the functions untill buffer is null
+** get as many line as we call the functions until buffer is null
 */
 
 #include "get_next_line.h"
@@ -33,16 +33,14 @@ char *buffer_to_give(int *ind, char *cont)
     int ok = 0;
     char *buffer = malloc(sizeof(*buffer));
 
-    if (!cont)
-        return NULL;
     for (; cont[*ind] && ok != 2; *ind += 1) {
         if (cont[*ind] == '\n' && ok != 1) {
             buffer[0] = '\n';
-            ok == 2;
-        }
-        else if (cont[*ind] == '\n' && ok == 1)
             ok = 2;
-        else {
+        }
+        if (cont[*ind] == '\n' && ok == 1)
+            ok = 2;
+        if (cont[*ind] != '\n') {
             buffer = my_strcat(buffer, &cont[*ind], 1);
             ok = 1;
         }
@@ -64,10 +62,10 @@ char *get_next_line(int fd)
     if (init == 0) {
         container = malloc(sizeof(*container) * READ_SIZE);
         k = read(fd, tmp, READ_SIZE);
+        if (k == 0)
+            return (NULL);
         for (; k != 0; k = read(fd, tmp, READ_SIZE))
-            if (k != 0) {
-                container = my_strcat(container, tmp, k);
-            }
+            container = my_strcat(container, tmp, k);
         init += 1;
     }
     tmp = buffer_to_give(&index, container);
