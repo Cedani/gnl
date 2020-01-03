@@ -56,28 +56,21 @@ char *get_next_line(int fd)
     static int init = 0;
     char *tmp = NULL;
     static char *container = NULL;
-    static int index = 0;
-    int k = -2;
+    static int index = 1;
+    int k = -25;
 
-    if (fd < 0 || (init == 1 && !container[index]) || READ_SIZE <= 0)
-        return (NULL);
     tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
-    if (!tmp)
+    if (fd < 0 || (init == 1 && !container[index]) || READ_SIZE <= 0 || !tmp)
         return (NULL);
     if (init == 0) {
         k = read(fd, tmp, READ_SIZE);
-        for (; k != 0; k = read(fd, tmp, READ_SIZE))
-            container = my_strcat(container, tmp, k);
+        for (; k == READ_SIZE || index == 1; k = read(fd, tmp, READ_SIZE)) {
+            if (k > 0)
+                container = my_strcat(container, tmp, k);
+            index = 0;
+        }
         init += 1;
     }
     tmp = buffer_to_give(&index, container);
     return (tmp);
-}
-
-int main(void) {
-    int fd = open("test", O_RDONLY);
-    char *buffer = get_next_line(fd);
-    if (!buffer)
-        return (84);
-    return (0);
 }
