@@ -5,9 +5,7 @@
 ** useful function
 */
 
-#ifndef READ_SIZE
-#define READ_SIZE (100)
-#endif // !READ_SIZE
+
 
 #ifndef GET_NEXT_LINE
 #define GET_NEXT_LINE
@@ -19,6 +17,9 @@
 #include <unistd.h>
 #include <stdio.h>
 
+    #ifndef READ_SIZE
+        #define READ_SIZE (100)
+    #endif // !READ_SIZE
 char *my_strcat(char *str1, char *str2, int n);
 char *buffer_to_give(int *index, char *container);
 char *get_next_line(int fd);
