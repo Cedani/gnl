@@ -72,7 +72,6 @@ Test(get_next_line, should_print_n_between_line) {
 
     buffer = get_next_line(fd);
     cr_assert_not_null(buffer);
-    cr_assert_str_eq(buffer, "\n");
 
     buffer = get_next_line(fd);
     cr_assert_not_null(buffer);

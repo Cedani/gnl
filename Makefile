@@ -18,6 +18,7 @@ NAME	=		unit_tests
 
 tests_run:
 	$(CC) -o $(NAME) $(SRC) $(UNIT) --coverage -lcriterion
+	./unit_tests
 
 clean:
 		rm -rf *.gcda
