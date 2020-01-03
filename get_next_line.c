@@ -34,6 +34,8 @@ char *buffer_to_give(int *ind, char *cont)
 {
     int ok = 0;
     char *buffer = malloc(sizeof(*buffer));
+    if (!buffer)
+        return (NULL);
 
     for (; cont[*ind] && ok != 2; *ind += 1) {
         if (cont[*ind] == '\n' && ok != 1) {
@@ -70,4 +72,12 @@ char *get_next_line(int fd)
     }
     tmp = buffer_to_give(&index, container);
     return (tmp);
+}
+
+int main(void) {
+    int fd = open("test", O_RDONLY);
+    char *buffer = get_next_line(fd);
+    if (!buffer)
+        return (84);
+    return (0);
 }
