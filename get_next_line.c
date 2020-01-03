@@ -59,14 +59,13 @@ char *get_next_line(int fd)
         return (NULL);
     tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
     if (init == 0) {
-        container = malloc(sizeof(*container) * READ_SIZE);
         k = read(fd, tmp, READ_SIZE);
-        if (k == 0)
-            return (NULL);
         for (; k != 0; k = read(fd, tmp, READ_SIZE))
             container = my_strcat(container, tmp, k);
         init += 1;
     }
+    if (!container)
+        return NULL;
     tmp = buffer_to_give(&index, container);
     return (tmp);
 }

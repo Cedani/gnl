@@ -10,20 +10,23 @@
 
 #include <criterion/criterion.h>
 
-Test(get_next_line, should_handle_wrong_file) {
+Test(get_next_line, should_handle_wrong_file)
+{
     int fd = open("wrong", O_RDONLY);
     cr_assert_null(get_next_line(fd));
     close(fd);
 }
 
-Test(get_next_line, should_handle_empty_file) {
+Test(get_next_line, should_handle_empty_file)
+{
     int fd = open("./tests/test_empty", O_RDONLY);
     char *buffer = get_next_line(fd);
     cr_assert_null(buffer);
     close(fd);
 }
 
-Test(get_next_line, should_return_first_line) {
+Test(get_next_line, should_return_first_line)
+{
     int fd = open("./tests/test1", O_RDONLY);
     char *buffer = get_next_line(fd);
     cr_assert_not_null(buffer);
@@ -32,7 +35,8 @@ Test(get_next_line, should_return_first_line) {
     close (fd);
 }
 
-Test(get_next_line, should_handle_two_line) {
+Test(get_next_line, should_handle_two_line)
+{
     int fd = open("./tests/test1", O_RDONLY);
     char *buffer = get_next_line(fd);
     cr_assert_not_null(buffer);
@@ -46,7 +50,8 @@ Test(get_next_line, should_handle_two_line) {
     close(fd);
 }
 
-Test(get_next_line, should_reach_end_file) {
+Test(get_next_line, should_reach_end_file)
+{
     int fd = open("./tests/test1", O_RDONLY);
     char *buffer = get_next_line(fd);
     cr_assert_not_null(buffer);
@@ -63,7 +68,8 @@ Test(get_next_line, should_reach_end_file) {
     close(fd);
 }
 
-Test(get_next_line, should_print_n_between_line) {
+Test(get_next_line, should_print_n_between_line)
+{
     int fd = open("./tests/test2", O_RDONLY);
     char *buffer = get_next_line(fd);
     cr_assert_not_null(buffer);
@@ -80,7 +86,8 @@ Test(get_next_line, should_print_n_between_line) {
     close(fd);
 }
 
-Test(my_strcat, should_handle_first_null) {
+Test(my_strcat, should_handle_first_null)
+{
     char *buffer = NULL;
     buffer = my_strcat(buffer, "Hello", 5);
 
