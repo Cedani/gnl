@@ -7,7 +7,6 @@
 
 #include "../get_next_line.h"
 
-
 #include <criterion/criterion.h>
 
 Test(get_next_line, should_handle_wrong_file)
