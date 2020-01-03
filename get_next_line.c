@@ -34,10 +34,10 @@ char *buffer_to_give(int *ind, char *cont)
     char *buffer = malloc(sizeof(*buffer));
 
     for (; cont[*ind] && ok != 2; *ind += 1) {
-        if (cont[*ind] == '\n' && ok != 1) {
-            buffer[0] = '\n';
-            ok = 2;
-        }
+        // if (cont[*ind] == '\n' && ok != 1) {
+        //     buffer[0] = '\n';
+        //     ok = 2;
+        // }
         if (cont[*ind] == '\n' && ok == 1)
             ok = 2;
         if (cont[*ind] != '\n') {
