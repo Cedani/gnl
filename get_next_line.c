@@ -65,8 +65,8 @@ char *get_next_line(int fd)
     if (fd < 0 || (init == 1 && !container[index]) || READ_SIZE <= 0 || !tmp)
         return (NULL);
     if (init == 0) {
-        for (; k == READ_SIZE || index == 1; k += 0) {
-            k = read(fd, tmp, READ_SIZE);
+        for (; k > READ_SIZE || index == 1; k += 0) {
+            k = read(fd, tmp, READ_SIZE + 1);
             if (k > 0)
                 container = my_strcat(container, tmp, k);
             index = 0;
