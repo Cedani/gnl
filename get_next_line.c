@@ -55,7 +55,7 @@ char *get_next_line(int fd)
     static int index = 0;
     int k = -2;
 
-    if (fd == -1 || (init == 1 && !container[index]) || READ_SIZE <= 0)
+    if (fd < 0 || (init == 1 && !container[index]) || READ_SIZE <= 0)
         return (NULL);
     tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
     if (init == 0) {
