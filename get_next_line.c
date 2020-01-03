@@ -16,6 +16,8 @@ char *my_strcat(char *str1, char *str2, int n)
     if (str1)
         for (; str1[i]; i += 1);
     result = malloc(sizeof(*result) * (i + n) + 1);
+    if (!result)
+        return (NULL);
     if (str1) {
         for (; j < i; j += 1)
             result[j] = str1[j];
@@ -55,17 +57,17 @@ char *get_next_line(int fd)
     static int index = 0;
     int k = -2;
 
-    if (fd < 0 || (init == 1 && !container[index]) || READ_SIZE <= 0)
+    if (fd <= 0 || (init == 1 && !container[index]) || READ_SIZE <= 0)
         return (NULL);
     tmp = malloc(sizeof(*tmp) * READ_SIZE + 1);
+    if (!tmp)
+        return (NULL);
     if (init == 0) {
         k = read(fd, tmp, READ_SIZE);
         for (; k != 0; k = read(fd, tmp, READ_SIZE))
             container = my_strcat(container, tmp, k);
         init += 1;
     }
-    if (!container)
-        return NULL;
     tmp = buffer_to_give(&index, container);
     return (tmp);
 }
