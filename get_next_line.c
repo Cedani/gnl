@@ -35,7 +35,6 @@ char *buffer_to_give(int *ind, char *cont)
 
     for (; cont[*ind] && ok != 2; *ind += 1) {
         if (cont[*ind] == '\n' && ok != 1) {
-            buffer[0] = ' ';
             ok = 2;
         }
         if (cont[*ind] == '\n' && ok == 1)
